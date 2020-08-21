@@ -147,7 +147,7 @@ grub_partition_msdos_iterate (grub_disk_t disk,
       if (p.offset == 0)
 	for (i = 0; i < 4; i++)
 	  if (mbr.entries[i].type == GRUB_PC_PARTITION_TYPE_GPT_DISK)
-	    return grub_error (GRUB_ERR_BAD_PART_TABLE, "dummy mbr");
+	    return GRUB_ERR_BAD_PART_TABLE;
 
       /* This is our loop-detection algorithm. It works the following way:
 	 It saves last position which was a power of two. Then it compares the
@@ -302,7 +302,7 @@ pc_partition_map_embed (struct grub_disk *disk, unsigned int *nsectors,
 
 	  /* If this is a GPT partition, this MBR is just a dummy.  */
 	  if (e->type == GRUB_PC_PARTITION_TYPE_GPT_DISK && i == 0)
-	    return grub_error (GRUB_ERR_BAD_PART_TABLE, "dummy mbr");
+	    return GRUB_ERR_BAD_PART_TABLE;
 	}
 
       /* Find an extended partition.  */
