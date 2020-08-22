@@ -122,6 +122,19 @@ static grub_err_t grub_pcpart_type (const grub_device_t dev,
 	type &= ~GRUB_PC_PARTITION_TYPE_HIDDEN_FLAG;
     }
 
+  if (grub_msdos_partition_is_empty (type))
+    {
+      mbr.entries[index].flag = 0x00;
+      mbr.entries[index].start_head = 0x00;
+      mbr.entries[index].start_sector = 0x00;
+      mbr.entries[index].start_cylinder = 0x00;
+      mbr.entries[index].end_head = 0x00;
+      mbr.entries[index].end_sector = 0x00;
+      mbr.entries[index].end_cylinder = 0x00;
+      mbr.entries[index].start = 0;
+      mbr.entries[index].length = 0;
+  }
+
   if (grub_msdos_partition_is_extended (type))
     {
       dev->disk->partition = part;
